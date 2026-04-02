@@ -114,54 +114,6 @@ NestJS (Stateless)
 
 ---
 
-## ⚙️ Setup
-
-### 1. Clone o projeto
-
-```bash
-git clone <repo-url>
-cd <project>
-```
-
----
-
-### 2. Instale as dependências
-
-```bash
-npm install
-```
-
----
-
-### 3. Configure as variáveis de ambiente
-
-```env
-PORT=3000
-
-REDIS_HOST=localhost
-REDIS_PORT=6379
-
-SECRET_SALT=your_secret_key
-```
-
----
-
-### 4. Suba o Redis
-
-```bash
-docker run -d -p 6379:6379 redis
-```
-
----
-
-### 5. Execute a aplicação
-
-```bash
-npm run start:dev
-```
-
----
-
 ## 📁 Estrutura do Projeto
 
 ```
