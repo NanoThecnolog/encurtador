@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { UrlService } from './url.service';
+import { URLRequestDTO } from './dto/url-request.dto';
 
 @Controller('url')
 export class UrlController {
@@ -8,7 +9,7 @@ export class UrlController {
 
     //endpoint de encurtamento
     @Post()
-    shorter(@Body('url') url: string) {
+    shorter(@Body() { url }: URLRequestDTO) {
         return this.service.shorter(url)
     }
 

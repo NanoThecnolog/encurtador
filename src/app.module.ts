@@ -7,6 +7,7 @@ import { UrlRepository } from './common/repositories/url.repository';
 import { AstraModule } from './common/providers/astra.module';
 import { RedirectModule } from './modules/redirect/redirect.module';
 import { ManageModule } from './modules/manage/manage.module';
+import { RedisModule } from './infra/redis/redis.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { ManageModule } from './modules/manage/manage.module';
     AstraModule,
     RedirectModule,
     ManageModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

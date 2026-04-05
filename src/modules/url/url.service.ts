@@ -1,13 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import Hashids from 'hashids';
 import { UrlRepository } from 'src/common/repositories/url.repository';
+import { RedisIdService } from 'src/common/utils/redis-id.service';
 import { ResponseUtil } from 'src/common/utils/response.util';
-import { b62 } from 'src/utils/base62';
+import { b62 } from 'src/common/variables/base62';
 
 @Injectable()
 export class UrlService {
+
     private hashid: Hashids
-    constructor(private readonly repo: UrlRepository) {
+
+    constructor(private readonly repo: UrlRepository, private readonly redis: RedisIdService) {
         const secret = process.env.SECRET_SALT
 
         if (!secret) throw new Error("Salt secreto não definido")
@@ -16,7 +19,9 @@ export class UrlService {
 
     //retorna uma url menor
     async shorter(url: string) {
-        const id = 11573 //id será gerado no redis
+        //const id = 11573 //id será gerado no redis
+        const id = await this.redis.generate()
+        console.log(id)
         const shorted = this.hashid.encode(id)
         console.log(shorted)
 
@@ -32,17 +37,10 @@ export class UrlService {
             return ResponseUtil.error(500, "Erro ao criar no banco", err)
         }
 
-
         return ResponseUtil.success({
             longUrl: url,
             shorted: `https://sh.com/${shorted}`
         })
-
-    }
-
-
-
-    async getByShortCode() {
 
     }
 }

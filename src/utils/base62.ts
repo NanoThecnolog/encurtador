@@ -1,1 +1,0 @@
-export const b62 = "0123456789ABCDEFGHIJKLMNOPQRSTUWYXZabcdefghijklmnopqrstuwyxz"
