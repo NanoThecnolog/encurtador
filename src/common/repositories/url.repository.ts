@@ -29,4 +29,8 @@ export class UrlRepository {
     findAll(limit = 100, offset = 0) {
         return this.collection.find({}).sort({ createdAt: -1 }).skip(offset).limit(limit).toArray()
     }
+
+    removeByShortCode(shortCode: string) {
+        return this.collection.deleteOne({ shortCode })
+    }
 }

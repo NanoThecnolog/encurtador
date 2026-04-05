@@ -17,4 +17,15 @@ export class ManageService {
             return ResponseUtil.error(500, "Erro ao buscar registros", err)
         }
     }
+
+    async remove(shortcode: string) {
+        try {
+            const remove = await this.repo.removeByShortCode(shortcode)
+            return ResponseUtil.success({
+                result: remove
+            })
+        } catch (err) {
+            return ResponseUtil.error(400, "Erro ao remover registro", err)
+        }
+    }
 }
