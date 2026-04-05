@@ -18,6 +18,6 @@ export class RedirectController {
         const originalUrl = await this.service.getOriginalUrl(id)
         if (!originalUrl) return ResponseUtil.error(400, 'url original não encontrada')
         logger.log('URL original encontrada')
-        return res.redirect(302, `https://${originalUrl}`)
+        return res.redirect(302, originalUrl)
     }
 }
