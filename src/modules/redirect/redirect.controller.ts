@@ -6,6 +6,8 @@ import { ResponseUtil } from 'src/common/utils/response.util';
 @Controller('redirect')
 export class RedirectController {
 
+    private logger = new Logger('console')
+
     constructor(private readonly service: RedirectService) { }
 
 
@@ -13,11 +15,15 @@ export class RedirectController {
     //id aqui é o shortcode da url encurtada
     @Get(':id')
     async redirect(@Param('id') id: string, @Res() res: Response) {
-        const logger = new Logger('console')
-        logger.log("Chamando rota...")
+
+        this.logger.log("Chamando rota...")
+
         const originalUrl = await this.service.getOriginalUrl(id)
-        if (!originalUrl) return ResponseUtil.error(400, 'url original não encontrada')
-        logger.log('URL original encontrada')
+        if (!originalUrl)
+            return ResponseUtil.error(400, 'url original não encontrada')
+
+        this.logger.log('URL original encontrada')
+
         return res.redirect(302, originalUrl)
     }
 }

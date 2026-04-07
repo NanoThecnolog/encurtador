@@ -8,8 +8,10 @@ export class RedirectService {
 
     //redireciona usuario pra url original
     async getOriginalUrl(shortCode: string) {
+
         const search = await this.repo.findByShortCode(shortCode)
         await this.repo.incrementClicks(shortCode)
+
         return search?.originalUrl
     }
 }

@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import Hashids from 'hashids';
 import { UrlRepository } from 'src/common/repositories/url.repository';
 import { RedisIdService } from 'src/common/utils/redis-id.service';
@@ -9,11 +9,14 @@ import { b62 } from 'src/common/variables/base62';
 export class UrlService {
 
     private hashid: Hashids
+    private logger = new Logger('Console')
 
     constructor(private readonly repo: UrlRepository, private readonly redis: RedisIdService) {
         const secret = process.env.SECRET_SALT
 
-        if (!secret) throw new Error("Salt secreto não definido")
+        if (!secret)
+            throw new Error("Salt secreto não definido")
+
         this.hashid = new Hashids(secret, 7, b62)
     }
 
@@ -21,9 +24,9 @@ export class UrlService {
     async shorter(url: string) {
         //const id = 11573 //id será gerado no redis
         const id = await this.redis.generate()
-        console.log(id)
+        //console.log(id)
         const shorted = this.hashid.encode(id)
-        console.log(shorted)
+        //console.log(shorted)
 
         try {
             await this.repo.create({
@@ -32,7 +35,7 @@ export class UrlService {
                 clicks: 0,
                 createdAt: new Date()
             })
-            console.log("registro feito")
+            this.logger.log("registro feito")
         } catch (err) {
             return ResponseUtil.error(500, "Erro ao criar no banco", err)
         }
